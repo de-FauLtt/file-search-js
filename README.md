@@ -1,9 +1,7 @@
 # file-search-js
 
-A command-line file search tool written in **JavaScript (Node.js)**.  
+A command-line file search tool written in **JavaScript (Node.js)**.
 Recursively indexes a directory tree and lets you query it by filename, extension, or file content.
-
-Same project as `file-search-cpp` — built to compare how the same concepts (recursion, inverted indexing, REPL) translate between C++ and JavaScript.
 
 ---
 
@@ -47,14 +45,14 @@ node src/main.js /path/to/directory --content
 
 | # | Problem | JS-specific? | How it's handled |
 |---|---------|-------------|-----------------|
-| 1 | Symlink cycles | Both | `Set` of `realpathSync` results |
-| 2 | Relative paths | Both | `path.resolve()` at entry |
-| 3 | Permission errors | Both | `try/catch` around `readdirSync` |
-| 4 | NTFS junctions (Windows) | JS only | Treated same as symlinks via `statSync` |
-| 5 | File deleted mid-walk | Both | `try/catch` around `statSync` |
-| 6 | Encoding errors in binary files | JS only | `latin1` encoding avoids UTF-8 decoder |
-| 7 | Null bytes in files | JS only | Presence of `\0` = binary, skip |
-| 8 | Async I/O in REPL | JS only | `readline` event-driven instead of blocking |
+| 1 | Symlink cycles | No | `Set` of `realpathSync` results |
+| 2 | Relative paths | No | `path.resolve()` at entry |
+| 3 | Permission errors | No | `try/catch` around `readdirSync` |
+| 4 | NTFS junctions (Windows) | Yes | Treated same as symlinks via `statSync` |
+| 5 | File deleted mid-walk | No | `try/catch` around `statSync` |
+| 6 | Encoding errors in binary files | Yes | `latin1` encoding avoids UTF-8 decoder |
+| 7 | Null bytes in files | Yes | Presence of `\0` = binary, skip |
+| 8 | Async I/O in REPL | Yes | `readline` event-driven instead of blocking |
 
 ---
 
@@ -73,10 +71,10 @@ file-search-js/
 
 ## Key concepts
 
-- **Recursive directory traversal** via `fs.readdirSync` with `withFileTypes: true`
-- **Inverted index** using `Map<string, Set<string>>`
-- **Encoding-safe tokenisation** with `latin1` + null-byte guard
-- **Event-driven REPL** using Node's built-in `readline` module
+- Recursive directory traversal via `fs.readdirSync` with `withFileTypes: true`
+- Inverted index using `Map<string, Set<string>>`
+- Encoding-safe tokenisation with `latin1` + null-byte guard
+- Event-driven REPL using Node's built-in `readline` module
 
 ---
 
