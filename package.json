@@ -1,0 +1,14 @@
+{
+  "name": "file-search-js",
+  "version": "1.0.0",
+  "description": "Recursive file search tool — learning project for recursion and indexing",
+  "type": "module",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js",
+    "search": "node src/main.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
